@@ -20,17 +20,23 @@ public:
         this->age = age;
     }
 
-    friend void print(const Person &p);
+    friend class Printer;
 };
 
-void print(const Person &p) {
-    cout << p.name << " " << p.age << endl;
-}
+class Printer {
+public:
+    void print(const Person &p) {
+        cout << p.name << " " << p.age << endl;
+    }
+};
+
+
 
 int main() {
     Person person("Patrik", 10);
 
-    print(person);
+    Printer printer;
+    printer.print(person);
 
     return 0;
 }
