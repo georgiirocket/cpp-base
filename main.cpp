@@ -1,33 +1,33 @@
 #include <iostream>
 using namespace std;
 
-class Student {
+class Person {
 public:
     string name;
     int age;
-
-    Student(string n, int a) {
-        name = n;
-        age = a;
-    }
-
-    ~Student() {
-        cout << "Destructor  works" << endl;
-    }
     
-    void talk() {
-        cout << "Hello, my name is " << name << endl;
+    Person(string name, int age) {
+        this->name = name;
+        this->age = age;
     }
 
-    int getAge() {
-        return age;
+    int getAge() const {
+        return this->age;
+    }
+
+    void setAge(int age) {
+        this->age = age;
     }
 };
 
 int main() {
-    Student student1("Parker", 20);
+    Person person("Patrik", 10);
 
-    student1.talk();
+    cout << person.getAge() << endl;
+    
+    person.setAge(15);
+
+    cout << person.getAge() << endl;
 
     return 0;
 }
