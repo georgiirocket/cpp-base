@@ -235,3 +235,23 @@ int main() {
     return 0;
 }
 ```
+
+## Enum
+
+```c++
+#include <iostream>
+using namespace std;
+
+enum Day {
+    Sunday,
+    Monday
+};
+
+int main() {
+    Day one = Sunday;
+
+    cout << one << endl;
+
+    return 0;
+}
+```
