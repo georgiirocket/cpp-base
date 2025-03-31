@@ -1,31 +1,33 @@
 #include <iostream>
 using namespace std;
 
-class Counter {
+class Item {
 private:
-    static int count;
+    static inline int count = 0;
+    int id;
+
 public:
-    Counter() {
+    Item() {
         count++;
+        this->id = count;
     }
 
     static int getCount() {
         return count;
     }
+
+    int getId() const {
+        return this->id;
+    }
 };
 
-int Counter::count = 0;
-
-
-
 int main() {
-    Counter c1;
-    
+    for(int i = 0; i < 5; i++) {
+        Item item;
 
-    cout << c1.getCount() << endl;
-    Counter c2;
-
-    cout << c2.getCount() << endl;
+        cout << "Id: " << item.getId() << endl;
+        cout << "Count: " << item.getCount() << endl;
+    }
 
     return 0;
 }
