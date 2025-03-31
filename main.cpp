@@ -1,42 +1,31 @@
 #include <iostream>
 using namespace std;
 
-class Person {
+class Counter {
 private:
-    string name;
-    int age;
-
+    static int count;
 public:
-    Person(string name, int age) {
-        this->name = name;
-        this->age = age;
+    Counter() {
+        count++;
     }
 
-    int getAge() const {
-        return this->age;
+    static int getCount() {
+        return count;
     }
-
-    void setAge(int age) {
-        this->age = age;
-    }
-
-    friend class Printer;
 };
 
-class Printer {
-public:
-    void print(const Person &p) {
-        cout << p.name << " " << p.age << endl;
-    }
-};
+int Counter::count = 0;
 
 
 
 int main() {
-    Person person("Patrik", 10);
+    Counter c1;
+    
 
-    Printer printer;
-    printer.print(person);
+    cout << c1.getCount() << endl;
+    Counter c2;
+
+    cout << c2.getCount() << endl;
 
     return 0;
 }
