@@ -3,59 +3,34 @@
 using namespace std;
 
 
-class Animal {
+class Shape {
     private:
-        string name;
-        int age;
-    
-    public: 
-        Animal(string name, int age) {
-            this->name = name;
-            this->age = age;
-        }
-        
-        string getName() const {
-            return this->name;
-        }
+        string color;
 
-        void setName(string n) {
-            this->name = n;
-        }
-
-        int getAge() const {
-            return age;
-        }
-        
-        void setAge(int a) {
-            this->age = a;
-        }
+    virtual double calculateArea() {
+        return 0.0;
+    }    
 };
 
-class Dog : public Animal {
+class Circle : public Shape {
     public:
-        Dog(string n, int a): Animal(n, a) {}
-        
-        string bark() {
-            return "bark";
-        }
+        int radius; 
+
+    double calculateArea() override {
+        return 3.14 * pow(this->radius, 2);
+    }       
 };
 
-class Cat : public Animal {
+class Rectangle : public Shape {
     public:
-        Cat(string n, int a): Animal(n, a) {}
-        
-        string meow() {
-            return "meow";
-        }
+        int width;
+        int height;
+
+    double calculateArea() override {
+        return this->width * this->height;
+    }         
 };
 
 int main() {
-    Animal a("animal", 1);
-    Dog d("Patric", 10);
-    Cat c("Mouse", 3);
-
-    cout << d.getName() << " " << d.getAge() << " " << d.bark() << endl;
-    cout << c.getName() << " " << c.getAge() << " " << c.meow() << endl;
-
     return 0;
 }
