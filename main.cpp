@@ -1,45 +1,58 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 class Shape {
-public:
+private:
     string color;
 
-    Shape(string color) {
-        this->color = color;
-    }
+public:
+    Shape(string c) {
+        this->color = c;
+    }  
 
-    ~Shape() {
-        cout << "Descructor shape" << endl;
-    }
-    
-    void info() {
-        cout << "Color: " << color << endl;
+    string info() {
+        return "Color: " + this->color;
     }
 };
 
-//public Shape, protected Shape, privat shape
+
 class Circle : public Shape {
-public: 
+private: 
     int radius;
 
+public:
     Circle(string color, int radius) : Shape(color) {
         this->radius = radius;
     }
 
-    ~Circle() {
-        cout << "Descructor circle" << endl;
+    int calculateArea() {
+        return 3.14 * pow(this->radius, 2);
+    }    
+};
+
+class Rectangle: public Shape {
+private:
+    int a;
+    int b;
+
+public:    
+    Rectangle(string color, int a, int b) : Shape(color) {
+        this->a = a;
+        this->b = b;
     }
 
-    void print() {
-        this->info();
-        cout << "Radius: " << this->radius << endl;
+    int calculateArea() {
+        return this->a * this->b;
     }
 };
 
 int main() {
-    Circle c("red", 10);
+    Rectangle r("Red", 10, 12);
+    Circle c("Green", 20);
 
-    c.print();
+    cout << r.calculateArea() << endl;
+    cout << c.calculateArea() << endl;
+
     return 0;
 }
