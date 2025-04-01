@@ -4,38 +4,70 @@ using namespace std;
 
 
 class Shape {
-    public:
+    private:
         string color;
+    public:
+        Shape(string c) {
+            color = c;
+        }
+        
+        string info() {
+            return "Color: " + color;
+        }
+        
+        virtual int calculateArea() {
+            return 0;
+        }
 
-    virtual double calculateArea() {
-        return 0.0;
-    }    
-};
-
+        virtual int calculatePerimeter() {
+            return 0;
+        }
+    };
+    
 class Circle : public Shape {
+    private:
+        int radius;
+        
     public:
-        int radius = 5; 
+        Circle(string c, int r) : Shape(c) {
+            radius = r;
+        }
+        
+        int calculateArea() override {
+            return 3.14 * radius * radius;
+        }
 
-    double calculateArea() override {
-        return 3.14 * pow(this->radius, 2);
-    }       
+        int calculatePerimeter() override {
+            return 2 * 3.14 * this->radius;
+        }
 };
-
+    
 class Rectangle : public Shape {
+    private:
+        int a;
+        int b;
+        
     public:
-        int width = 2;
-        int height = 3;
+        Rectangle(string c, int a, int b) : Shape(c) {
+            this->a = a;
+            this->b = b;
+        }
+        
+        int calculateArea() override {
+            return a * b;
+        }
 
-    double calculateArea() override {
-        return this->width * this->height;
-    }         
+        int calculatePerimeter() override {
+            return 2 * (this->a + this->b);
+        }
 };
 
 int main() {
-    Shape* shape1 = new Circle();
-    Shape* shape2 = new Rectangle();
+    Shape* circle = new Circle("Red", 20);
+    Shape* rec = new Rectangle("Green", 2, 3);
 
-    cout << shape1->calculateArea() << endl;
+    cout << circle->calculatePerimeter() << endl;
+    cout << rec->calculatePerimeter() << endl;
 
     return 0;
 }
