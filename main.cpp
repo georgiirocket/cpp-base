@@ -2,57 +2,60 @@
 #include <cmath>
 using namespace std;
 
-class Shape {
-private:
-    string color;
 
-public:
-    Shape(string c) {
-        this->color = c;
-    }  
+class Animal {
+    private:
+        string name;
+        int age;
+    
+    public: 
+        Animal(string name, int age) {
+            this->name = name;
+            this->age = age;
+        }
+        
+        string getName() const {
+            return this->name;
+        }
 
-    string info() {
-        return "Color: " + this->color;
-    }
+        void setName(string n) {
+            this->name = n;
+        }
+
+        int getAge() const {
+            return age;
+        }
+        
+        void setAge(int a) {
+            this->age = a;
+        }
 };
 
-
-class Circle : public Shape {
-private: 
-    int radius;
-
-public:
-    Circle(string color, int radius) : Shape(color) {
-        this->radius = radius;
-    }
-
-    int calculateArea() {
-        return 3.14 * pow(this->radius, 2);
-    }    
+class Dog : public Animal {
+    public:
+        Dog(string n, int a): Animal(n, a) {}
+        
+        string bark() {
+            return "bark";
+        }
 };
 
-class Rectangle: public Shape {
-private:
-    int a;
-    int b;
-
-public:    
-    Rectangle(string color, int a, int b) : Shape(color) {
-        this->a = a;
-        this->b = b;
-    }
-
-    int calculateArea() {
-        return this->a * this->b;
-    }
+class Cat : public Animal {
+    public:
+        Cat(string n, int a): Animal(n, a) {}
+        
+        string meow() {
+            return "meow";
+        }
 };
 
 int main() {
-    Rectangle r("Red", 10, 12);
-    Circle c("Green", 20);
+    Animal a("animal", 1);
+    Dog d("Patric", 10);
+    Cat c("Mouse", 3);
 
-    cout << r.calculateArea() << endl;
-    cout << c.calculateArea() << endl;
+    cout << d.getName() << " " << d.getAge() << " " << d.bark() << endl;
+    cout << c.getName() << " " << c.getAge() << " " << c.meow() << endl;
 
     return 0;
 }
