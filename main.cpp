@@ -4,7 +4,7 @@ using namespace std;
 
 
 class Shape {
-    private:
+    public:
         string color;
 
     virtual double calculateArea() {
@@ -14,7 +14,7 @@ class Shape {
 
 class Circle : public Shape {
     public:
-        int radius; 
+        int radius = 5; 
 
     double calculateArea() override {
         return 3.14 * pow(this->radius, 2);
@@ -23,8 +23,8 @@ class Circle : public Shape {
 
 class Rectangle : public Shape {
     public:
-        int width;
-        int height;
+        int width = 2;
+        int height = 3;
 
     double calculateArea() override {
         return this->width * this->height;
@@ -32,5 +32,10 @@ class Rectangle : public Shape {
 };
 
 int main() {
+    Shape* shape1 = new Circle();
+    Shape* shape2 = new Rectangle();
+
+    cout << shape1->calculateArea() << endl;
+
     return 0;
 }
