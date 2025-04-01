@@ -2,72 +2,64 @@
 #include <cmath>
 using namespace std;
 
-
-class Shape {
+class Animal {
     private:
-        string color;
-    public:
-        Shape(string c) {
-            color = c;
-        }
-        
-        string info() {
-            return "Color: " + color;
-        }
-        
-        virtual int calculateArea() {
-            return 0;
-        }
-
-        virtual int calculatePerimeter() {
-            return 0;
-        }
-    };
+        string name;
+        int age;
     
-class Circle : public Shape {
-    private:
-        int radius;
-        
-    public:
-        Circle(string c, int r) : Shape(c) {
-            radius = r;
+    public: 
+        Animal(string name, int age) {
+            this->name = name;
+            this->age = age;
         }
         
-        int calculateArea() override {
-            return 3.14 * radius * radius;
+        string getName() const {
+            return this->name;
         }
 
-        int calculatePerimeter() override {
-            return 2 * 3.14 * this->radius;
+        void setName(string n) {
+            this->name = n;
+        }
+
+        int getAge() const {
+            return age;
+        }
+        
+        void setAge(int a) {
+            this->age = a;
+        }
+
+        virtual string sound() {
+            return "";
         }
 };
-    
-class Rectangle : public Shape {
-    private:
-        int a;
-        int b;
-        
-    public:
-        Rectangle(string c, int a, int b) : Shape(c) {
-            this->a = a;
-            this->b = b;
-        }
-        
-        int calculateArea() override {
-            return a * b;
-        }
 
-        int calculatePerimeter() override {
-            return 2 * (this->a + this->b);
+class Dog : public Animal {
+    public:
+        Dog(string n, int a): Animal(n, a) {}
+
+        string sound() override {
+            return "bark";
+        }
+};
+
+class Cat : public Animal {
+    public:
+        Cat(string n, int a): Animal(n, a) {}
+
+        string sound() override {
+            return "meow";
         }
 };
 
 int main() {
-    Shape* circle = new Circle("Red", 20);
-    Shape* rec = new Rectangle("Green", 2, 3);
+    Animal an("animal", 1);
+    Animal* dog = new Dog("James", 3);
+    Animal* cat = new Cat("Patrick", 10);
 
-    cout << circle->calculatePerimeter() << endl;
-    cout << rec->calculatePerimeter() << endl;
+    cout << an.sound() << endl;
+    cout << dog->sound() << endl;
+    cout << cat->sound() << endl;
 
     return 0;
 }
