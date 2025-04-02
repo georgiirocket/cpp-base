@@ -17,6 +17,9 @@ int main() {
     Animal* d = new Dog;
     Animal* c = new Cat;
 
+    Cat* cat = dynamic_cast<Cat*>(c);
+    Animal* c = dynamic_cast<Animal*>(cat);
+
     d->print();
     c->print();
 
