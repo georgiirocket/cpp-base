@@ -3,28 +3,27 @@
 #include <typeinfo>
 using namespace std;
 
-class Engine {
+class Author {
     public:
-        void start() {
-            cout << "Engine is on" << endl;
-        }
+        Author(const string& name) : name(name) {}
+    
+    private: 
+        string name;    
 };
 
-class Car {
-    private: 
-        Engine engine;
-
+class Book {
+    private:
+        string title;
+        Author& author;
+    
     public:
-        void startCar() {
-            engine.start();
-            cout << "Car is on" << endl;
-        }    
+        Book(const string& title, Author& author): title(title), author(author) {}    
 };
 
 int main() {
-    Car car;
+    Author author("Patrik");
+    Book book("My book", author);
 
-    car.startCar();
 
     return 0;
 }
