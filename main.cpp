@@ -5,6 +5,7 @@ using namespace std;
 class Shape {
     public:
         virtual int calculateArea() = 0;
+        virtual void info() = 0;
     };
     
 class Circle : public Shape {
@@ -18,6 +19,10 @@ class Circle : public Shape {
         
         int calculateArea() override {
             return 3.14 * radius * radius;
+        }
+
+        void info() override {
+            cout << "Radius: " << this->radius << endl;
         }
 };
     
@@ -35,6 +40,11 @@ class Rectangle : public Shape {
         int calculateArea() override {
             return a * b;
         }
+
+        void info() override {
+            cout << "A: " << this->a << endl;
+            cout << "B: " << this->b << endl;
+        }
 };
 
 int main() {
@@ -43,6 +53,9 @@ int main() {
 
     cout <<  c.calculateArea() << endl;
     cout <<  r.calculateArea() << endl;
+
+    c.info();
+    r.info();
 
     return 0;
 }
