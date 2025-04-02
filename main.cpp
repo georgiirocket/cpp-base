@@ -3,25 +3,28 @@
 #include <typeinfo>
 using namespace std;
 
-class Animal {
-    public: 
-        virtual void print() {
-            cout << "Object type: " << typeid(*this).name() << endl;
+class Engine {
+    public:
+        void start() {
+            cout << "Engine is on" << endl;
         }
 };
 
-class Dog : public Animal {};
-class Cat : public Animal {};
+class Car {
+    private: 
+        Engine engine;
+
+    public:
+        void startCar() {
+            engine.start();
+            cout << "Car is on" << endl;
+        }    
+};
 
 int main() {
-    Animal* d = new Dog;
-    Animal* c = new Cat;
+    Car car;
 
-    Cat* cat = dynamic_cast<Cat*>(c);
-    Animal* c = dynamic_cast<Animal*>(cat);
-
-    d->print();
-    c->print();
+    car.startCar();
 
     return 0;
 }
