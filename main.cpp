@@ -2,64 +2,47 @@
 #include <cmath>
 using namespace std;
 
-class Animal {
-    private:
-        string name;
-        int age;
+class Shape {
+    public:
+        virtual int calculateArea() = 0;
+    };
     
-    public: 
-        Animal(string name, int age) {
-            this->name = name;
-            this->age = age;
+class Circle : public Shape {
+    private:
+        int radius;
+        
+    public:
+        Circle(int r) {
+            radius = r;
         }
         
-        string getName() const {
-            return this->name;
+        int calculateArea() override {
+            return 3.14 * radius * radius;
         }
-
-        void setName(string n) {
-            this->name = n;
-        }
-
-        int getAge() const {
-            return age;
+};
+    
+class Rectangle : public Shape {
+    private:
+        int a;
+        int b;
+        
+    public:
+        Rectangle(int a, int b) {
+            this->a = a;
+            this->b = b;
         }
         
-        void setAge(int a) {
-            this->age = a;
-        }
-
-        virtual string sound() {
-            return "";
-        }
-};
-
-class Dog : public Animal {
-    public:
-        Dog(string n, int a): Animal(n, a) {}
-
-        string sound() override {
-            return "bark";
-        }
-};
-
-class Cat : public Animal {
-    public:
-        Cat(string n, int a): Animal(n, a) {}
-
-        string sound() override {
-            return "meow";
+        int calculateArea() override {
+            return a * b;
         }
 };
 
 int main() {
-    Animal an("animal", 1);
-    Animal* dog = new Dog("James", 3);
-    Animal* cat = new Cat("Patrick", 10);
+    Circle c(10);
+    Rectangle r(2,3);
 
-    cout << an.sound() << endl;
-    cout << dog->sound() << endl;
-    cout << cat->sound() << endl;
+    cout <<  c.calculateArea() << endl;
+    cout <<  r.calculateArea() << endl;
 
     return 0;
 }
