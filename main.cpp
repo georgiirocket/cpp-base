@@ -1,115 +1,69 @@
 #include <iostream>
-#include <cmath>
-#include <typeinfo>
 #include <string>
-#include <vector>
 using namespace std;
 
-class Animal {
-    protected:
-        string name;
-        int age;
-        
-    public:
-        Animal(string name, int age) {
-            this->name = name;
-            this->age = age;
-        }
-        
-        string getName() const {
-            return name;
-        }
-        
-        void setName(string name) {
-            this->name = name;
-        }
-        
-        int getAge() const {
-            return age;
-        }
-        
-        void setAge(int age) {
-            this->age = age;
-        }
-        
-        virtual string sound() = 0;
-
-        virtual void info() = 0;
-};
-    
-class Dog : public Animal {
-    public:
-        Dog(string name, int age) : Animal(name, age) {
-            
-        }
-    
-        string sound() override {
-            return "bark";
-        }
-
-        void info() override {
-            cout << "Dog" << endl;
-            cout << "Name: " << this->getName() << endl;
-            cout << "Age: " << this->getAge() << endl;
-        }
-};
-    
-class Cat : public Animal {
-    public:
-        Cat(string name, int age) : Animal(name, age) {
-            
-        }
-    
-        string sound() override {
-            return "meow";
-        }
-
-        void info() override {
-            cout << "Cat" << endl;
-            cout << "Name: " << this->getName() << endl;
-            cout << "Age: " << this->getAge() << endl;
-        }
-};
-
-class AnimalShelter {
+class FranctionalNumber {
     private: 
-        int room;
-        vector<Animal*> storage = {};
-    
+        int numerator;
+        int denominator;
+
     public:
-        AnimalShelter(int room) {
-            this->room = room;
-        }
-        
-        void addAnimal(Animal* animal) {
-            if(this->storage.size() == this->room) {
-                return;
-            }
+        FranctionalNumber(int num, int den) : numerator(num), denominator(den) {}
 
-            this->storage.push_back(animal);
+    FranctionalNumber operator+(const FranctionalNumber& other) {
+        int num = this->numerator * other.denominator + this->denominator * other.numerator;
+        int den = this->denominator * other.denominator;
+
+        return FranctionalNumber(num, den);
+    }
+
+    FranctionalNumber operator++() {
+        this->numerator += this->denominator;
+
+        return *this;
+    }
+
+    FranctionalNumber operator++(int) {
+        FranctionalNumber temp = *this;
+
+        this->numerator += this->denominator;
+
+        return temp;
+    }
+
+    bool operator==(const FranctionalNumber& f) {
+        if(this->numerator == f.numerator && this->denominator == f.denominator) {
+            return true;
         }
 
-        void listAnimals() {
-            for (int i = 0; i < this->storage.size(); i++) {
-                this->storage[i]->info();
-            }
-        }
+        return false;
+    }
+
+    friend ostream& operator<<(ostream& out, FranctionalNumber& f);
+    friend istream& operator>>(istream& in, FranctionalNumber& f);
 };
+
+ostream& operator<<(ostream& out, FranctionalNumber& f) {
+    out << f.numerator << " / " << f.denominator;
+
+    return out;
+}
+
+//With empty constructor
+istream& operator>>(istream& in, FranctionalNumber& f) {
+    char delim;
+    in >> f.numerator >> delim >> f.denominator;
+
+    return in;
+}
 
 int main() {
-    Cat cat("Mouse", 10);
-    Dog dog("Patrik", 3);
-    Dog dog1("Patrik_1", 9);
-    Dog dog2("Kuku", 12);
+    FranctionalNumber f1(5, 6);
+    FranctionalNumber f2(3, 4);
 
-    AnimalShelter st(3);
+    FranctionalNumber f3 = f1 + f2;
 
-    st.addAnimal(&cat);
-    st.addAnimal(&dog);
-    st.addAnimal(&dog1);
-    st.addAnimal(&dog2);
-
-    st.listAnimals();
+    cout << f3 << endl;
 
     return 0;
 }
