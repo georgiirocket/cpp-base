@@ -1,78 +1,115 @@
 #include <iostream>
 #include <cmath>
 #include <typeinfo>
+#include <string>
+#include <vector>
 using namespace std;
 
-class Shape {
+class Animal {
+    protected:
+        string name;
+        int age;
+        
     public:
-        virtual int calculateArea() = 0;
-        virtual int calculatePerimeter() = 0;
-        virtual string getTypeName() = 0;
+        Animal(string name, int age) {
+            this->name = name;
+            this->age = age;
+        }
+        
+        string getName() const {
+            return name;
+        }
+        
+        void setName(string name) {
+            this->name = name;
+        }
+        
+        int getAge() const {
+            return age;
+        }
+        
+        void setAge(int age) {
+            this->age = age;
+        }
+        
+        virtual string sound() = 0;
+
+        virtual void info() = 0;
 };
     
-class Circle : public Shape {
-    private:
-        int radius;
-        
+class Dog : public Animal {
     public:
-        Circle(int r) {
-            radius = r;
+        Dog(string name, int age) : Animal(name, age) {
+            
         }
-        
-        int calculateArea() override {
-            return 3.14 * radius * radius;
+    
+        string sound() override {
+            return "bark";
         }
-        
-        int calculatePerimeter() override {
-            return 2 * 3.14 * radius;
-        }
-        
-        string getTypeName() override {
-            return typeid(*this).name();
+
+        void info() override {
+            cout << "Dog" << endl;
+            cout << "Name: " << this->getName() << endl;
+            cout << "Age: " << this->getAge() << endl;
         }
 };
     
-class Rectangle : public Shape {
-    private:
-        int a;
-        int b;
-        
+class Cat : public Animal {
     public:
-        Rectangle(int a, int b) {
-            this->a = a;
-            this->b = b;
+        Cat(string name, int age) : Animal(name, age) {
+            
         }
-        
-        int calculateArea() override {
-            return a * b;
-        }
-        
-        int calculatePerimeter() override {
-            return (a + b) * 2;
-        }
-
-        string getTypeName() override {
-            return typeid(*this).name();
-        }
-    };
     
-bool isCircle(Shape* shape) {
-    const string str = "Circle";
+        string sound() override {
+            return "meow";
+        }
 
-    if(shape->getTypeName().find(str) != std::string::npos) {
-        return true;
-    }
+        void info() override {
+            cout << "Cat" << endl;
+            cout << "Name: " << this->getName() << endl;
+            cout << "Age: " << this->getAge() << endl;
+        }
+};
 
-    return false;
+class AnimalShelter {
+    private: 
+        int room;
+        vector<Animal*> storage = {};
+    
+    public:
+        AnimalShelter(int room) {
+            this->room = room;
+        }
+        
+        void addAnimal(Animal* animal) {
+            if(this->storage.size() == this->room) {
+                return;
+            }
+
+            this->storage.push_back(animal);
+        }
+
+        void listAnimals() {
+            for (int i = 0; i < this->storage.size(); i++) {
+                this->storage[i]->info();
+            }
+        }
 };
 
 int main() {
-    Shape* c = new Circle(10);
-    Shape* r = new Rectangle(10, 5);
-    
-    cout << isCircle(c) << endl;
-    cout << isCircle(r) << endl;
+    Cat cat("Mouse", 10);
+    Dog dog("Patrik", 3);
+    Dog dog1("Patrik_1", 9);
+    Dog dog2("Kuku", 12);
 
+    AnimalShelter st(3);
+
+    st.addAnimal(&cat);
+    st.addAnimal(&dog);
+    st.addAnimal(&dog1);
+    st.addAnimal(&dog2);
+
+    st.listAnimals();
 
     return 0;
 }
