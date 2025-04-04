@@ -3,18 +3,13 @@
 using namespace std;
 
 template <typename T>
-T Max(T a, T b) {
-    return a > b ? a : b;
-}
-
-template <>
-char Max<char>(char a, char b) {
-    return a > b ? toupper(a) : toupper(a);
+T Min(T a, T b) {
+    return a < b ? a : b;
 }
 
 int main() {
-    cout << Max(10, 2) << endl;
-    cout << Max('a', 'b') << endl;
+    cout << Min(10, 2) << endl;
+    cout << Min('a', 'b') << endl;
 
     return 0;
 }
