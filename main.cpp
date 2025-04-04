@@ -2,14 +2,24 @@
 #include <string>
 using namespace std;
 
-template <typename T>
-T Min(T a, T b) {
-    return a < b ? a : b;
+template <typename F, typename S>
+struct Pair
+{
+    F first;
+    S second;
+};
+
+template <typename F, typename S>
+ostream& operator<<(ostream& out, const Pair<F, S>& p) {
+    out << p.first << " " << p.second;
+
+    return out;
 }
 
 int main() {
-    cout << Min(10, 2) << endl;
-    cout << Min('a', 'b') << endl;
+    Pair<string, int> p = {"Test", 20};
+
+    cout << p << endl;
 
     return 0;
 }

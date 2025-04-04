@@ -801,6 +801,10 @@ int main() {
 ## Template pair
 
 ```c++
+#include <iostream>
+#include <string>
+using namespace std;
+
 template <typename T, typename P>
 struct Node
 {
