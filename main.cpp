@@ -16,10 +16,8 @@ class A {
 
 
 int main() {
-    unique_ptr<A> a = make_unique<A>();
-    
-    //Owner will be b;
-    unique_ptr<A> b = move(a);
+    shared_ptr<A> a = make_shared<A>();
+    shared_ptr<A> b = a;
 
     return 0;
 }
