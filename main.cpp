@@ -2,24 +2,24 @@
 #include <string>
 using namespace std;
 
-template <typename F, typename S>
-struct Pair
-{
-    F first;
-    S second;
+class A {
+    public:
+        A() {
+            cout << "A created" << endl;
+        }
+
+        ~A() {
+            cout << "A destroed" << endl;
+        }
 };
 
-template <typename F, typename S>
-ostream& operator<<(ostream& out, const Pair<F, S>& p) {
-    out << p.first << " " << p.second;
 
-    return out;
-}
 
 int main() {
-    Pair<string, int> p = {"Test", 20};
-
-    cout << p << endl;
+    unique_ptr<A> a = make_unique<A>();
+    
+    //Owner will be b;
+    unique_ptr<A> b = move(a);
 
     return 0;
 }
