@@ -2,27 +2,51 @@
 #include <string>
 using namespace std;
 
-class A {
-    public:
-        A() {
-            cout << "A created" << endl;
+template <typename T>
+struct Node {
+    T val;
+    unique_ptr<Node<T>> next;
+
+    Node(T v, unique_ptr<Node<T>> n) : val(v), next(move(n)) {
+        
+    }
+};
+
+template <typename T>
+class Stack {
+private:
+    unique_ptr<Node<T>> head;
+
+public:
+    Stack() = default;
+
+    void push(T val) {
+        head = make_unique<Node<T>>(val, move(head));
+    }
+
+    T pop() {
+        if (!head) {
+            throw runtime_error("Stack underflow: Cannot pop from empty stack");
         }
 
-        ~A() {
-            cout << "A destroed" << endl;
-        }
-
-        weak_ptr<A> partner;
+        T res = head->val;
+        head = move(head->next);  // this deletes the old head automatically
+        return res;
+    }
 };
 
 
 
 int main() {
-    shared_ptr<A> a = make_shared<A>();
-    shared_ptr<A> b = make_shared<A>();
+    Stack<double> stack;
 
-    a->partner = b;
-    b->partner = a;
+    for(int i = 0; i < 5; ++i) {
+        stack.push(i / 2.0);
+    }
+
+    for(int i = 0; i < 5; ++i) {
+        cout << stack.pop() << endl;
+    }
 
     return 0;
 }
