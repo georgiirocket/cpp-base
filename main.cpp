@@ -1,81 +1,102 @@
 #include <iostream>
 #include <string>
+#include <memory> 
 using namespace std;
 
-template <typename T>
-class Array {
+class Question {
     private:
-        size_t size;
-        T* storage;
+        string question;
+        string answerA;
+        string answerB;
+        string answerC;
+        string answerD;
+        char rightAnswer;
 
     public:
-        Array(int size) {
-            this->size = size;
-            this->storage = new T[size];
+        Question(string question, string answerA, string answerB, string answerC, string answerD, char rightAnswer) {
+            this->question = question;
+            this->answerA = answerA;
+            this->answerB = answerB;
+            this->answerC = answerC;
+            this->answerD = answerD;
+            this->rightAnswer = rightAnswer;
         }
 
-        ~Array() {
-            delete[] storage;
-        }
-        
-        void setValue(size_t index, T value) {
-            if(index < 0 || index >= this->size) {
-                throw out_of_range("Cannot set element with this index");
-            }
+        friend ostream& operator<<(ostream& out, const Question& q);
 
-            this->storage[index] = value;
-        }
-
-        T getValue(size_t index) const {
-            if(index < 0 || index >= this->size) {
-                throw out_of_range("Cannot set element with this index");
-            }
-
-            return this->storage[index];
+        bool checkRightAnswer(char& ch) const {
+            return this->rightAnswer == ch;
         }
 };
 
-template <typename M>
-class Array1 {
-private:
-    size_t size;
-    unique_ptr<M[]> storage;
+ostream& operator<<(ostream& out, const Question& q) {
+    out << q.question << endl;
+    out << "a) " << q.answerA << endl;
+    out << "b) " << q.answerB << endl;
+    out << "c) " << q.answerC << endl;
+    out << "d) " << q.answerD << endl;
 
-public:
-    // Constructor
-    Array1(size_t size) : size(size), storage(make_unique<M[]>(size)) {}
+    return out;
+}
 
-    // No need for a destructor — handled by unique_ptr
-
-    void setValue(size_t index, const M& value) {
-        if (index < 0 || index >= this->size) {
-            throw out_of_range("Index out of range in setValue");
+class Quiz {
+    private:
+        unique_ptr<vector<Question>> questions;
+        int questionCount;
+        int size;
+    
+    public:
+        Quiz(int questionCount) {
+            this->questions = make_unique<vector<Question>>();
+            this->questionCount = questionCount;
+            this->size = 0;
         }
-        storage[index] = value;
-    }
 
-    M getValue(size_t index) const {
-        if (index < 0 || index >= this->size) {
-            throw out_of_range("Index out of range in getValue");
+        void operator+=(Question q) {
+            if(this->questionCount == this->questions->size()) {
+                throw out_of_range("Limit questions is: " + to_string(this->questionCount));
+            }
+
+            this->questions->push_back(q);
+            this->size += 1;
         }
-        return storage[index];
-    }
+
+        void start() const {
+            int rightCount = 0;
+            char value;
+
+            for (const Question& q : *questions) {
+                cout << q << endl;
+
+                cin >> value;
+
+                bool isRightAnswer = q.checkRightAnswer(value);
+
+                if(isRightAnswer) {
+                    rightCount += 1;
+                }
+            }
+
+            cout << "Total score: " << rightCount << endl;
+        }
 };
-
 
 int main() {
-    Array<int> myArr(5);
+    Quiz quiz(3);
 
-    myArr.setValue(0, 1);
-    cout << myArr.getValue(0) << endl;
+    Question q("question", "answerA", "answerB", "answerC", "answerD", 'd');
 
-    Array1<int> myArr1(2);
+    quiz += q;
 
-    myArr1.setValue(0, 1122);
-    cout << myArr1.getValue(0) << endl;
+    Question q1("question1", "answerA", "answerB", "answerC", "answerD", 'a');
 
+    quiz += q1;
 
+    Question q2("question2", "answerA", "answerB", "answerC", "answerD", 'c');
 
-    
+    quiz += q2;
+
+    quiz.start();
+
     return 0;
 }
